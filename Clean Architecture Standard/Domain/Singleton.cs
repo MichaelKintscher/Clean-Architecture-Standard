@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Clean_Architecture_Standard.Models
+namespace CleanArchitectureStandard.Domain
 {
     /// <summary>
     /// Provides a base class that implements the singleton design

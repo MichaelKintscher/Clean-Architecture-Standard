@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureStandard.EventArguments
+namespace CleanArchitectureStandard.Domain.EventArguments
 {
     /// <summary>
     /// Contains event info with an entity value.
@@ -18,7 +18,7 @@ namespace CleanArchitectureStandard.EventArguments
 
         public EntityEventArgs(T value)
         {
-            this.Value = value;
+            Value = value;
         }
     }
 }
