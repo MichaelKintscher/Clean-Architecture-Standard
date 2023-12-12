@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>CleanArchitectureStandard</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageId>kintscher.dev.$(AssemblyName)</PackageId>
+    <Title>Clean Architecture Standard</Title>
+    <Description>A set of cross-plaform classes to implement Clean Architecture.</Description>
+    <PackageProjectUrl>https://github.com/MichaelKintscher/Clean-Architecture-Standard</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/MichaelKintscher/Clean-Architecture-Standard</RepositoryUrl>
+  </PropertyGroup>
+
+</Project>

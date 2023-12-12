@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CleanArchitectureStandard.EventArguments
+{
+    /// <summary>
+    /// Contains event info with an entity value.
+    /// </summary>
+    public class EntityEventArgs<T> : EventArgs
+    {
+        /// <summary>
+        /// The value.
+        /// </summary>
+        public T Value { get; private set; }
+
+        public EntityEventArgs(T value)
+        {
+            this.Value = value;
+        }
+    }
+}
