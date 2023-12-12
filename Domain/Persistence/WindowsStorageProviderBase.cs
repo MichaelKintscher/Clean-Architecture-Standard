@@ -1,4 +1,5 @@
 ﻿using CleanArchitectureStandard.Adapters.Json;
+using CleanArchitectureStandard.Application;
 using CleanArchitectureStandard.Domain;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace CleanArchitectureWindows.Persistence
     /// <summary>
     /// Implements base storage provider functions for Windows.
     /// </summary>
-    public class WindowsStorageProviderBase : Singleton<WindowsStorageProviderBase>
+    public class WindowsStorageProviderBase : Singleton<WindowsStorageProviderBase>, IStorageProvider<WindowsStorageProviderBase>
     {
         /// <summary>
         /// Saves a list of values of the given type.
