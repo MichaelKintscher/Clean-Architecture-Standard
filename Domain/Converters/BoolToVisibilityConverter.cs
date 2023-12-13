@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Converters
+namespace CleanArchitectureWindows.Converters
 {
     /// <summary>
     /// Converts between a bool and a visibility value. The visbility values TRUE and FALSE map to can be configured.
