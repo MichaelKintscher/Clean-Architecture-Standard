@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace CleanArchitectureEntities.Messaging
 {
     /// <summary>
-    /// Model for an email message.
+    /// Represents a common email message interface.
     /// </summary>
-    public class Email
+    public interface IEmail
     {
         /// <summary>
         /// The unique ID of the message given by the app.
@@ -30,14 +30,5 @@ namespace CleanArchitectureEntities.Messaging
         /// The body of the email.
         /// </summary>
         public string Body { get; set; }
-
-        /// <summary>
-        /// Default constructor - creates an email with an empty string subject and body.
-        /// </summary>
-        public Email()
-        {
-            this.Subject = string.Empty;
-            this.Body = string.Empty;
-        }
     }
 }
