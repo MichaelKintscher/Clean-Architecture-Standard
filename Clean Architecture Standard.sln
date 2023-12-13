@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitectureStandard",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitectureWindows", "Domain\CleanArchitectureWindows.csproj", "{4EE9FD88-0BEB-4BF8-85E1-DDF6C4EEFDC4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitectureEntities", "CleanArchitectureEntities\CleanArchitectureEntities.csproj", "{0D1D0714-66E0-41C8-BAB8-767F22C36CE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{4EE9FD88-0BEB-4BF8-85E1-DDF6C4EEFDC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EE9FD88-0BEB-4BF8-85E1-DDF6C4EEFDC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EE9FD88-0BEB-4BF8-85E1-DDF6C4EEFDC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D1D0714-66E0-41C8-BAB8-767F22C36CE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D1D0714-66E0-41C8-BAB8-767F22C36CE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D1D0714-66E0-41C8-BAB8-767F22C36CE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D1D0714-66E0-41C8-BAB8-767F22C36CE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
