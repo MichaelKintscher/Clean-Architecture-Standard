@@ -68,5 +68,59 @@ namespace CleanArchitectureWindows.Persistence
             values.Add(value);
             await this.SaveAsync(values, fileName);
         }
+
+        /// <summary>
+        /// Adds the given values to the saved collection of those values.
+        /// </summary>
+        /// <typeparam name="T">The type of the value to add.</typeparam>
+        /// <param name="values">The values to add.</param>
+        /// <param name="fileName">The name of the file to add the value to.</param>
+        /// <returns></returns>
+        public async Task AddAsync<T>(IEnumerable<T> values, string fileName)
+        {
+            List<T> allValues = await this.LoadAsync<T>(fileName);
+            allValues.AddRange(values);
+            await this.SaveAsync(allValues, fileName);
+        }
+
+        /// <summary>
+        /// Removes the given value from the saved collection of those values.
+        /// </summary>
+        /// <typeparam name="T">The type of the value to remove.</typeparam>
+        /// <param name="value">The value to remove.</param>
+        /// <param name="fileName">The name of the file to remove the value from.</param>
+        /// <returns>The removed value, or the default value if nothing was removed.</returns>
+        public async Task<T> RemoveAsync<T>(T value, string fileName)
+        {
+            List<T> allValues = await this.LoadAsync<T>(fileName);
+            bool removed = allValues.Remove(value);
+            await this.SaveAsync(allValues, fileName);
+
+            return removed ? value : default;
+        }
+
+        /// <summary>
+        /// Removes the given values from the saved collection of those values.
+        /// </summary>
+        /// <typeparam name="T">The type of the value to remove.</typeparam>
+        /// <param name="values">The values to remove.</param>
+        /// <param name="fileName">The name of the file to remove the values from.</param>
+        /// <returns>The removed values, or an empty collection if nothing was removed.</returns>
+        public async Task<IEnumerable<T>> RemoveAsync<T>(IEnumerable<T> values, string fileName)
+        {
+            List<T> removedValues = new List<T>();
+            List<T> allValues = await this.LoadAsync<T>(fileName);
+            foreach (T value in values)
+            {
+                if(allValues.Remove(value))
+                {
+                    removedValues.Add(value);
+                }
+            }
+            await this.SaveAsync(allValues, fileName);
+
+            IEnumerable<T> results = removedValues;
+            return results;
+        }
     }
 }
