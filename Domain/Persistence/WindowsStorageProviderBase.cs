@@ -1,6 +1,6 @@
-﻿using CleanArchitectureStandard.Adapters.Json;
-using CleanArchitectureStandard.Application;
-using CleanArchitectureStandard.Domain;
+﻿using CleanArchitecture.Core.Adapters.Json;
+using CleanArchitecture.Core.Application;
+using CleanArchitecture.Core.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace CleanArchitectureWindows.Persistence
+namespace CleanArchitecture.Windows.Persistence
 {
     /// <summary>
     /// Implements base storage provider functions for Windows.

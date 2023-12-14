@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Navigation
+namespace CleanArchitecture.Windows.Navigation
 {
     /// <summary>
     /// Contains event info for a navigation request.

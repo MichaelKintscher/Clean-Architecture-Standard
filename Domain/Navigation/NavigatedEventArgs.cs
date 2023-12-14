@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureWindows.Navigation
+namespace CleanArchitecture.Windows.Navigation
 {
     /// <summary>
     /// Contains event info for when a navigation has completed.

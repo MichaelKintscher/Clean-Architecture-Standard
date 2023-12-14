@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CleanArchitectureWindows.Converters
+namespace CleanArchitecture.Windows.Converters
 {
     /// <summary>
     /// Converts between a bool and the inverse of that bool.

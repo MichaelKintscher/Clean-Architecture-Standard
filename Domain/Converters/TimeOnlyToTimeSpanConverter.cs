@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureWindows.Converters
+namespace CleanArchitecture.Windows.Converters
 {
     /// <summary>
     /// Converts between a timespan and a timeonly struct.

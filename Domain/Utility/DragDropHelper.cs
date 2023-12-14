@@ -3,8 +3,9 @@ using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Windows.Foundation;
 
-namespace Utility
+namespace CleanArchitecture.Windows.Utility
 {
     /// <summary>
     /// Contains methods for supporting drag and drop.
