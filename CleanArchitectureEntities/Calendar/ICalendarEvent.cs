@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureEntities.Calendar
+namespace CleanArchitecture.Entities.Calendar
 {
     /// <summary>
     /// Represents a common calendar event interface.

@@ -2,8 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>CleanArchitecture.Entities</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PackageId>kintscher.dev.$(RootNamespace)</PackageId>
+    <Title>Clean Architecture Entities</Title>
+    <Description>A set of cross-plaform entity classes to implement Clean Architecture.</Description>
+    <PackageProjectUrl>https://github.com/MichaelKintscher/Clean-Architecture-Standard</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/MichaelKintscher/Clean-Architecture-Standard</RepositoryUrl>
+    <Authors>Michael Kintscher</Authors>
+    <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
 </Project>

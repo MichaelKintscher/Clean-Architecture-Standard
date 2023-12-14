@@ -1,11 +1,11 @@
-﻿using CleanArchitectureStandard.Domain.Api;
+﻿using CleanArchitecture.Core.Domain.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureStandard.Application
+namespace CleanArchitecture.Core.Application
 {
     public interface IOAuthService
     {

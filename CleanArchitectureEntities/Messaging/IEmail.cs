@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureEntities.Messaging
+namespace CleanArchitecture.Entities.Messaging
 {
     /// <summary>
     /// Represents a common email message interface.

@@ -1,13 +1,13 @@
-﻿using CleanArchitectureStandard.Application;
-using CleanArchitectureStandard.Domain.Api;
-using CleanArchitectureStandard.Domain.EventArguments;
+﻿using CleanArchitecture.Core.Application;
+using CleanArchitecture.Core.Domain.Api;
+using CleanArchitecture.Core.Domain.EventArguments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureStandard.Infrastructure
+namespace CleanArchitecture.Core.Infrastructure
 {
     /// <summary>
     /// Implements OAuth 2.0 flows for an external API, using the Singleton design pattern.

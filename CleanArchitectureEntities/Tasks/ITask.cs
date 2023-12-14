@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureEntities.Tasks
+namespace CleanArchitecture.Entities.Tasks
 {
     /// <summary>
     /// Represents a common task interface.

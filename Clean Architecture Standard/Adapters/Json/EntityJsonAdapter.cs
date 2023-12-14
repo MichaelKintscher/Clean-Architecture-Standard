@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureStandard.Adapters.Json
+namespace CleanArchitecture.Core.Adapters.Json
 {
     /// <summary>
     /// Contians methods to convert entities to/from JSON with shallow serialization.

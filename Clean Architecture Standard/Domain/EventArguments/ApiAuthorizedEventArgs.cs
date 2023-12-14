@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureStandard.Domain.EventArguments
+namespace CleanArchitecture.Core.Domain.EventArguments
 {
     /// <summary>
     /// Contains event info for when an API is authorized.

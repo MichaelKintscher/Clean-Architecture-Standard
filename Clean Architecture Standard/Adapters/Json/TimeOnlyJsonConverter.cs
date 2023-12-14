@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureStandard.Adapters.Json
+namespace CleanArchitecture.Core.Adapters.Json
 {
     public class TimeOnlyJsonConverter : JsonConverter<TimeOnly>
     {

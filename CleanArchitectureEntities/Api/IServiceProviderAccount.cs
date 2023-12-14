@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureEntities.Api
+namespace CleanArchitecture.Entities.Api
 {
     /// <summary>
     /// Represents an account with an API service provider.

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitectureStandard.Domain.Api
+namespace CleanArchitecture.Core.Domain.Api
 {
     /// <summary>
     /// Represents an OAuth token issued by an OAuth service to authenticate access.
