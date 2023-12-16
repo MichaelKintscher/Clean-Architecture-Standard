@@ -15,6 +15,7 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Copyright>Copyright 2023 - Michael Kintscher</Copyright>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <VersionPrefix>1.0.1</VersionPrefix>
   </PropertyGroup>
 
   <ItemGroup>
