@@ -8,14 +8,20 @@ namespace CleanArchitecture.Core.Domain.EventArguments
 {
     /// <summary>
     /// Contains event info with a list of entity values.
+    /// NOT intended for direct use; inherit from this class.
     /// </summary>
-    class EntityListEventArgs<T> : EventArgs
+    /// <typeparam name="T">The type of the entity the args contains a list of.</typeparam>
+    public abstract class EntityListEventArgs<T> : EventArgs
     {
         /// <summary>
         /// The list of values.
         /// </summary>
-        public List<T> Values { get; private set; }
+        protected List<T> Values { get; private set; }
 
+        /// <summary>
+        /// Constructor sets the given list of value.
+        /// </summary>
+        /// <param name="values">The list of values to set.</param>
         public EntityListEventArgs(List<T> values)
         {
             Values = values;

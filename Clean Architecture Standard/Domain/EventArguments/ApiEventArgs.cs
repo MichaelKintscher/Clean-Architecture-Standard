@@ -9,16 +9,17 @@ namespace CleanArchitecture.Core.Domain.EventArguments
     /// <summary>
     /// Contains event info for when an API event is raised.
     /// </summary>
-    public class ApiEventArgs : EventArgs
+    public class ApiEventArgs : EntityEventArgs<string>
     {
         /// <summary>
         /// The name of the Api the event was raised for.
         /// </summary>
-        public string ApiName { get; private set; }
+        public string ApiName
+        {
+            get => this.Value;
+        }
 
         public ApiEventArgs(string apiName)
-        {
-            this.ApiName = apiName;
-        }
+            : base(apiName) { }
     }
 }
