@@ -13,7 +13,7 @@ namespace CleanArchitecture.Windows.Persistence
     /// <summary>
     /// Implements base storage provider functions for Windows.
     /// </summary>
-    public class WindowsStorageProviderBase : Singleton<WindowsStorageProviderBase>, IStorageProvider<WindowsStorageProviderBase>
+    public class WindowsStorageProviderBase<T> : Singleton<T>, IStorageProvider<T> where T : new()
     {
         /// <summary>
         /// Saves a list of values of the given type.
