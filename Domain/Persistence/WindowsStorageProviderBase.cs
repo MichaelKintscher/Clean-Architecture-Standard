@@ -21,11 +21,12 @@ namespace CleanArchitecture.Windows.Persistence
         /// <typeparam name="T">The type of values to save.</typeparam>
         /// <param name="values">The values to save.</param>
         /// <param name="fileName">The name of the file to save the values to.</param>
+        /// <param name="adapter">The adapter to use to serialize the values. Defaults to EntityJsonAdapter if none is provided.</param>
         /// <returns></returns>
-        public async Task SaveAsync<T>(List<T> values, string fileName)
+        public async Task SaveAsync(List<T> values, string fileName, IJsonAdapter<T>? adapter = null)
         {
             // Serialize the data to JSON.
-            string valuesString = EntityJsonAdapter<T>.SerializeList(values);
+            string valuesString = adapter == null ? EntityJsonAdapter<T>.SerializeList(values) : adapter.SerializeList(values);
 
             // Create the file, replacing the old if it already exists, and write the data to the file.
             StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
@@ -37,8 +38,9 @@ namespace CleanArchitecture.Windows.Persistence
         /// </summary>
         /// <typeparam name="T">The type of values to load.</typeparam>
         /// <param name="fileName">The name of the file to load the values from.</param>
+        /// <param name="adapter">The adapter to use to serialize the values. Defaults to EntityJsonAdapter if none is provided.</param>
         /// <returns></returns>
-        public async Task<List<T>> LoadAsync<T>(string fileName)
+        public async Task<List<T>> LoadAsync(string fileName, IJsonAdapter<T>? adapter = null)
         {
             // Initialize the list.
             List<T> values = new List<T>();
@@ -49,7 +51,7 @@ namespace CleanArchitecture.Windows.Persistence
             {
                 // Read the data from the file.
                 string fileContent = await FileIO.ReadTextAsync(file);
-                values = EntityJsonAdapter<T>.DeserializeList(fileContent);
+                values = adapter == null ? EntityJsonAdapter<T>.DeserializeList(fileContent) : adapter.DeserializeList(fileContent);
             }
 
             return values;
@@ -61,12 +63,13 @@ namespace CleanArchitecture.Windows.Persistence
         /// <typeparam name="T">The type of the value to add.</typeparam>
         /// <param name="value">The value to add.</param>
         /// <param name="fileName">The name of the file to add the value to.</param>
+        /// <param name="adapter">The adapter to use to serialize the values. Defaults to EntityJsonAdapter if none is provided.</param>
         /// <returns></returns>
-        public async Task AddAsync<T>(T value, string fileName)
+        public async Task AddAsync(T value, string fileName, IJsonAdapter<T>? adapter = null)
         {
-            List<T> values = await this.LoadAsync<T>(fileName);
+            List<T> values = await this.LoadAsync(fileName, adapter);
             values.Add(value);
-            await this.SaveAsync(values, fileName);
+            await this.SaveAsync(values, fileName, adapter);
         }
 
         /// <summary>
@@ -75,12 +78,13 @@ namespace CleanArchitecture.Windows.Persistence
         /// <typeparam name="T">The type of the value to add.</typeparam>
         /// <param name="values">The values to add.</param>
         /// <param name="fileName">The name of the file to add the value to.</param>
+        /// <param name="adapter">The adapter to use to serialize the values. Defaults to EntityJsonAdapter if none is provided.</param>
         /// <returns></returns>
-        public async Task AddAsync<T>(IEnumerable<T> values, string fileName)
+        public async Task AddAsync(IEnumerable<T> values, string fileName, IJsonAdapter<T>? adapter = null)
         {
-            List<T> allValues = await this.LoadAsync<T>(fileName);
+            List<T> allValues = await this.LoadAsync(fileName, adapter);
             allValues.AddRange(values);
-            await this.SaveAsync(allValues, fileName);
+            await this.SaveAsync(allValues, fileName, adapter);
         }
 
         /// <summary>
@@ -89,12 +93,13 @@ namespace CleanArchitecture.Windows.Persistence
         /// <typeparam name="T">The type of the value to remove.</typeparam>
         /// <param name="value">The value to remove.</param>
         /// <param name="fileName">The name of the file to remove the value from.</param>
+        /// <param name="adapter">The adapter to use to serialize the values. Defaults to EntityJsonAdapter if none is provided.</param>
         /// <returns>The removed value, or the default value if nothing was removed.</returns>
-        public async Task<T> RemoveAsync<T>(T value, string fileName)
+        public async Task<T> RemoveAsync(T value, string fileName, IJsonAdapter<T>? adapter = null)
         {
-            List<T> allValues = await this.LoadAsync<T>(fileName);
+            List<T> allValues = await this.LoadAsync(fileName, adapter);
             bool removed = allValues.Remove(value);
-            await this.SaveAsync(allValues, fileName);
+            await this.SaveAsync(allValues, fileName, adapter);
 
             return removed ? value : default;
         }
@@ -105,11 +110,12 @@ namespace CleanArchitecture.Windows.Persistence
         /// <typeparam name="T">The type of the value to remove.</typeparam>
         /// <param name="values">The values to remove.</param>
         /// <param name="fileName">The name of the file to remove the values from.</param>
+        /// <param name="adapter">The adapter to use to serialize the values. Defaults to EntityJsonAdapter if none is provided.</param>
         /// <returns>The removed values, or an empty collection if nothing was removed.</returns>
-        public async Task<IEnumerable<T>> RemoveAsync<T>(IEnumerable<T> values, string fileName)
+        public async Task<IEnumerable<T>> RemoveAsync(IEnumerable<T> values, string fileName, IJsonAdapter<T>? adapter = null)
         {
             List<T> removedValues = new List<T>();
-            List<T> allValues = await this.LoadAsync<T>(fileName);
+            List<T> allValues = await this.LoadAsync(fileName, adapter);
             foreach (T value in values)
             {
                 if(allValues.Remove(value))
@@ -117,7 +123,7 @@ namespace CleanArchitecture.Windows.Persistence
                     removedValues.Add(value);
                 }
             }
-            await this.SaveAsync(allValues, fileName);
+            await this.SaveAsync(allValues, fileName, adapter);
 
             IEnumerable<T> results = removedValues;
             return results;

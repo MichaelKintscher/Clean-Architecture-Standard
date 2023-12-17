@@ -11,13 +11,14 @@ namespace CleanArchitecture.Core.Adapters.Json
     /// <summary>
     /// Contians methods to convert entities to/from JSON with shallow serialization.
     /// </summary>
-    public static class EntityJsonAdapter<T>
+    public class EntityJsonAdapter<T> : IJsonAdapter<T>
     {
         private static readonly JsonSerializerOptions options = new JsonSerializerOptions()
         {
             Converters = { new TimeOnlyJsonConverter() }
         };
 
+        #region Methods
         /// <summary>
         /// Serializes an entity to JSON.
         /// </summary>
@@ -130,5 +131,54 @@ namespace CleanArchitecture.Core.Adapters.Json
 
             return entities;
         }
+        #endregion
+
+        #region Interface Implementation
+        /// <summary>
+        /// Serializes an entity to JSON.
+        /// </summary>
+        /// <param name="entity">The entity to serialize.</param>
+        /// <returns></returns>
+        string IJsonAdapter<T>.Serialize(T entity)
+        {
+            return EntityJsonAdapter<T>.Serialize(entity);
+        }
+
+        /// <summary>
+        /// Deserializes and entity from JSON.
+        /// </summary>
+        /// <param name="json">The JSON to deserialize from.</param>
+        /// <returns></returns>
+        /// <exception cref="JsonException">Thrown if the given JSON is not in the correct format.</exception>
+        T IJsonAdapter<T>.Deserialize(string json)
+        {
+            return EntityJsonAdapter<T>.Deserialize(json);
+        }
+
+        /// <summary>
+        /// Serializes a list of entities to JSON. The list is converted to a JSON
+        /// array of JSON objects. The array itself is stored as a property on the
+        /// root JSON object with the given property name.
+        /// </summary>
+        /// <param name="entities">The list of entities to serialize.</param>
+        /// <param name="propertyName">The property name to give the serialized JSON list on the root JSON object.</param>
+        /// <returns></returns>
+        string IJsonAdapter<T>.SerializeList(List<T> entities, string propertyName = "values")
+        {
+            return EntityJsonAdapter<T>.SerializeList(entities, propertyName);
+        }
+
+        /// <summary>
+        /// Deserializes a list of entities from JSON.
+        /// </summary>
+        /// <param name="json">The JSON to deserialize from. The list of entities should be stored on a property of the root JSON object as a JSON array of JSON objects.</param>
+        /// <param name="propertyName">The name of the property on the root JSON object the JSON array is stored on.</param>
+        /// <returns></returns>
+        /// <exception cref="JsonException">Thrown if the given JSON is not in the correct format.</exception>
+        List<T> IJsonAdapter<T>.DeserializeList(string json, string propertyName = "values")
+        {
+            return EntityJsonAdapter<T>.DeserializeList(json, propertyName);
+        }
+        #endregion
     }
 }

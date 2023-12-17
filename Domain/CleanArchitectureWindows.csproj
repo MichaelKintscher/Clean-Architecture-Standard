@@ -15,7 +15,8 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Copyright>Copyright 2023 - Michael Kintscher</Copyright>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <VersionPrefix>1.0.2</VersionPrefix>
+    <VersionPrefix>1.0.3</VersionPrefix>
+    <PackageReleaseNotes>Updated Windows Storage Provider Base to allow the option of providing a custom Json adapter for serialization.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
