@@ -15,16 +15,13 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Copyright>Copyright 2023 - Michael Kintscher</Copyright>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <VersionPrefix>1.0.3</VersionPrefix>
-    <PackageReleaseNotes>Updated Windows Storage Provider Base to allow the option of providing a custom Json adapter for serialization.</PackageReleaseNotes>
+    <VersionPrefix>1.1.0</VersionPrefix>
+    <PackageReleaseNotes>Fixed reference errors. Package now depends properly on kintscher.dev.CleanArchitecture.Core.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="kintscher.dev.CleanArchitecture.Core" Version="1.0.2" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231115000" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Clean Architecture Standard\CleanArchitectureCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>
