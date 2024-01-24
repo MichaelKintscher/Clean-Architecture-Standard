@@ -13,7 +13,7 @@ namespace CleanArchitecture.Windows.Persistence
     /// <summary>
     /// Implements base storage provider functions for Windows.
     /// </summary>
-    public class WindowsStorageProviderBase<T> : Singleton<T>, IStorageProvider<T> where T : new()
+    public class WindowsStorageProviderBase<T> : Singleton<T>, IStorageProvider where T : new()
     {
         /// <summary>
         /// Saves a list of values of the given type.
@@ -23,7 +23,7 @@ namespace CleanArchitecture.Windows.Persistence
         /// <param name="fileName">The name of the file to save the values to.</param>
         /// <param name="adapter">The adapter to use to serialize the values. Defaults to EntityJsonAdapter if none is provided.</param>
         /// <returns></returns>
-        public async Task SaveAsync(List<T> values, string fileName, IJsonAdapter<T>? adapter = null)
+        public async Task SaveAsync<T>(List<T> values, string fileName, IJsonAdapter<T>? adapter = null)
         {
             // Serialize the data to JSON.
             string valuesString = adapter == null ? EntityJsonAdapter<T>.SerializeList(values) : adapter.SerializeList(values);
@@ -40,7 +40,7 @@ namespace CleanArchitecture.Windows.Persistence
         /// <param name="fileName">The name of the file to load the values from.</param>
         /// <param name="adapter">The adapter to use to serialize the values. Defaults to EntityJsonAdapter if none is provided.</param>
         /// <returns></returns>
-        public async Task<List<T>> LoadAsync(string fileName, IJsonAdapter<T>? adapter = null)
+        public async Task<List<T>> LoadAsync<T>(string fileName, IJsonAdapter<T>? adapter = null)
         {
             // Initialize the list.
             List<T> values = new List<T>();
@@ -65,7 +65,7 @@ namespace CleanArchitecture.Windows.Persistence
         /// <param name="fileName">The name of the file to add the value to.</param>
         /// <param name="adapter">The adapter to use to serialize the values. Defaults to EntityJsonAdapter if none is provided.</param>
         /// <returns></returns>
-        public async Task AddAsync(T value, string fileName, IJsonAdapter<T>? adapter = null)
+        public async Task AddAsync<T>(T value, string fileName, IJsonAdapter<T>? adapter = null)
         {
             List<T> values = await this.LoadAsync(fileName, adapter);
             values.Add(value);
@@ -80,7 +80,7 @@ namespace CleanArchitecture.Windows.Persistence
         /// <param name="fileName">The name of the file to add the value to.</param>
         /// <param name="adapter">The adapter to use to serialize the values. Defaults to EntityJsonAdapter if none is provided.</param>
         /// <returns></returns>
-        public async Task AddAsync(IEnumerable<T> values, string fileName, IJsonAdapter<T>? adapter = null)
+        public async Task AddAsync<T>(IEnumerable<T> values, string fileName, IJsonAdapter<T>? adapter = null)
         {
             List<T> allValues = await this.LoadAsync(fileName, adapter);
             allValues.AddRange(values);
@@ -95,7 +95,7 @@ namespace CleanArchitecture.Windows.Persistence
         /// <param name="fileName">The name of the file to remove the value from.</param>
         /// <param name="adapter">The adapter to use to serialize the values. Defaults to EntityJsonAdapter if none is provided.</param>
         /// <returns>The removed value, or the default value if nothing was removed.</returns>
-        public async Task<T> RemoveAsync(T value, string fileName, IJsonAdapter<T>? adapter = null)
+        public async Task<T> RemoveAsync<T>(T value, string fileName, IJsonAdapter<T>? adapter = null)
         {
             List<T> allValues = await this.LoadAsync(fileName, adapter);
             bool removed = allValues.Remove(value);
@@ -112,7 +112,7 @@ namespace CleanArchitecture.Windows.Persistence
         /// <param name="fileName">The name of the file to remove the values from.</param>
         /// <param name="adapter">The adapter to use to serialize the values. Defaults to EntityJsonAdapter if none is provided.</param>
         /// <returns>The removed values, or an empty collection if nothing was removed.</returns>
-        public async Task<IEnumerable<T>> RemoveAsync(IEnumerable<T> values, string fileName, IJsonAdapter<T>? adapter = null)
+        public async Task<IEnumerable<T>> RemoveAsync<T>(IEnumerable<T> values, string fileName, IJsonAdapter<T>? adapter = null)
         {
             List<T> removedValues = new List<T>();
             List<T> allValues = await this.LoadAsync(fileName, adapter);

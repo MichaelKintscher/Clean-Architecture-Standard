@@ -15,12 +15,12 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Copyright>Copyright 2023 - Michael Kintscher</Copyright>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <VersionPrefix>1.1.0</VersionPrefix>
-    <PackageReleaseNotes>Fixed reference errors. Package now depends properly on kintscher.dev.CleanArchitecture.Core.</PackageReleaseNotes>
+    <VersionPrefix>1.1.2</VersionPrefix>
+    <PackageReleaseNotes>Updated Windows Storage Provider Base to remove type paramter on interface.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="kintscher.dev.CleanArchitecture.Core" Version="1.0.2" />
+    <PackageReference Include="kintscher.dev.CleanArchitecture.Core" Version="1.0.4" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231115000" />
   </ItemGroup>
 

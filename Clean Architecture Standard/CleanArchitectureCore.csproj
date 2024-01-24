@@ -15,8 +15,8 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Copyright>Copyright 2023 - Michael Kintscher</Copyright>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <VersionPrefix>1.0.2</VersionPrefix>
-    <PackageReleaseNotes>Added a Json Adapter interface.</PackageReleaseNotes>
+    <VersionPrefix>1.0.4</VersionPrefix>
+    <PackageReleaseNotes>Removed interface type parameter from Storage Provider interface.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
