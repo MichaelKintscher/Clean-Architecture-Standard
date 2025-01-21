@@ -15,8 +15,18 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Copyright>Copyright 2023 - Michael Kintscher</Copyright>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <VersionPrefix>1.0.5</VersionPrefix>
-    <PackageReleaseNotes>Updated ApiBase class to support the four HTTP verbs: GET, POST, PUT, and DELETE. Also added an ItemEventArgs and ItemUpdatedEventArgs to be generic implementations of EntityEventArgs and EntityUpdatedEventArgs respectively. Manual casting of the "Item" is needed to use these.</PackageReleaseNotes>
+    <VersionPrefix>1.0.6</VersionPrefix>
+    <PackageReleaseNotes>Added support for loopback IP addresses to the OAuthApi base class.
+
+To use this, call StartOAuthListener to initiate a listener on the loopback IP address (which your inheriting class should provide into the base class through the constructor as the OAuth Redirect URI). Do this prior to presenting the UI and/or redirecting the user to the OAuth endpoint, as the user's actions there will trigger the response that needs to be listened for.
+
+The OAuthApi base class will raise the OAuthResponseReceived event when the listener receives a response from the OAuth endpoint (including an OAuth code), and then immediately proceed to exchange the code for a token at the OAuth token endpoint. The OAuth Api base class will raise the Authorized event when a token has been received.
+
+After the Authorized event is raised, the GetToken and GetCachedTokenData methods will both return cached token data including the newly authorized account. At this point calls can now be made to the API with the authorized account ID.
+
+Note that the OAuthApi class does not support persistance on its own; the token data will need to be retrieved using GetCachedTokenData and then saved locally if it is to persist between user sessions.
+
+Optionally, call CancelOAuthListener to stop the listener on the loopback IP address if, for example, the user cancels the authorization part-way through.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

@@ -398,35 +398,7 @@ namespace CleanArchitecture.Core.Infrastructure
         }
         #endregion
 
-        #region Helper Methods - OAuth Flow
-        private string ListenForOauthResponse()
-        {
-            using (HttpListener httpListener = new HttpListener())
-            {
-                httpListener.Prefixes.Add(this.OAuthRedirectUri + "/");
-                httpListener.Start();
-
-                // Blocking call - this is why this method is run in a background worker.
-                HttpListenerContext context = httpListener.GetContext();
-                HttpListenerRequest request = context.Request;
-
-                HttpListenerResponse response = context.Response;
-
-                System.Diagnostics.Debug.WriteLine("Response url received: " + request.Url);
-
-                //response.Redirect("");
-                response.Close();
-
-                // Pause to ensure the response has been sent.
-                Thread.Sleep(1000);
-                httpListener.Stop();
-
-                return request.Url.ToString();
-            }
-        }
-        #endregion
-
-        #region Helper Methods - Add/Remove Token
+        #region Methods - Add/Remove Token
         /// <summary>
         /// Initializes the token data and refreshes each token if needed.
         /// </summary>
@@ -478,6 +450,34 @@ namespace CleanArchitecture.Core.Infrastructure
 
             // Clear the cached token data in memory.
             return this.tokenDataCollection.Remove(accountId);
+        }
+        #endregion
+
+        #region Helper Methods - OAuth Flow
+        private string ListenForOauthResponse()
+        {
+            using (HttpListener httpListener = new HttpListener())
+            {
+                httpListener.Prefixes.Add(this.OAuthRedirectUri + "/");
+                httpListener.Start();
+
+                // Blocking call - this is why this method is run in a background worker.
+                HttpListenerContext context = httpListener.GetContext();
+                HttpListenerRequest request = context.Request;
+
+                HttpListenerResponse response = context.Response;
+
+                System.Diagnostics.Debug.WriteLine("Response url received: " + request.Url);
+
+                //response.Redirect("");
+                response.Close();
+
+                // Pause to ensure the response has been sent.
+                Thread.Sleep(1000);
+                httpListener.Stop();
+
+                return request.Url.ToString();
+            }
         }
         #endregion
 
