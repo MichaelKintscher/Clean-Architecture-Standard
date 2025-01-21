@@ -15,8 +15,10 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Copyright>Copyright 2023 - Michael Kintscher</Copyright>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <VersionPrefix>1.0.6</VersionPrefix>
-    <PackageReleaseNotes>Added support for loopback IP addresses to the OAuthApi base class.
+    <VersionPrefix>1.0.7</VersionPrefix>
+    <PackageReleaseNotes>Fixed bug from 1.0.6 where the OAuthResponseReceived event was internal instead of public.
+    
+From 1.0.6: Added support for loopback IP addresses to the OAuthApi base class.
 
 To use this, call StartOAuthListener to initiate a listener on the loopback IP address (which your inheriting class should provide into the base class through the constructor as the OAuth Redirect URI). Do this prior to presenting the UI and/or redirecting the user to the OAuth endpoint, as the user's actions there will trigger the response that needs to be listened for.
 

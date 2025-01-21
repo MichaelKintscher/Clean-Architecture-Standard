@@ -112,11 +112,11 @@ namespace CleanArchitecture.Core.Infrastructure
             this.Authorized?.Invoke(this, args);
         }
 
-        internal delegate void OAuthResponseHandler(object sender, string e);
+        public delegate void OAuthResponseHandler(object sender, string e);
         /// <summary>
         /// Raised when an OAuth response has been received.
         /// </summary>
-        internal event OAuthResponseHandler OAuthResponseReceived;
+        public event OAuthResponseHandler OAuthResponseReceived;
         private void RaiseOAuthResponseReceived(string response)
         {
             // Create the args and call the listening event handlers, if there are any.
