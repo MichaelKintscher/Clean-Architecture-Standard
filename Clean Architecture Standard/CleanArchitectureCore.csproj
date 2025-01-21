@@ -15,8 +15,8 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Copyright>Copyright 2023 - Michael Kintscher</Copyright>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <VersionPrefix>1.0.4</VersionPrefix>
-    <PackageReleaseNotes>Removed interface type parameter from Storage Provider interface.</PackageReleaseNotes>
+    <VersionPrefix>1.0.5</VersionPrefix>
+    <PackageReleaseNotes>Updated ApiBase class to support the four HTTP verbs: GET, POST, PUT, and DELETE. Also added an ItemEventArgs and ItemUpdatedEventArgs to be generic implementations of EntityEventArgs and EntityUpdatedEventArgs respectively. Manual casting of the "Item" is needed to use these.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

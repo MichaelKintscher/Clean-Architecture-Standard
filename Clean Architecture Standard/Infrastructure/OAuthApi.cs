@@ -3,9 +3,13 @@ using CleanArchitecture.Core.Domain.Api;
 using CleanArchitecture.Core.Domain.EventArguments;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace CleanArchitecture.Core.Infrastructure
 {
@@ -16,6 +20,7 @@ namespace CleanArchitecture.Core.Infrastructure
     /// <typeparam name="T"></typeparam>
     public abstract class OAuthApi<T> : ApiBase<T>, IOAuthService where T : new()
     {
+        #region Properties
         /// <summary>
         /// The authorization endpoint.
         /// </summary>
@@ -61,8 +66,19 @@ namespace CleanArchitecture.Core.Infrastructure
                 }
             }
         }
+        #endregion
 
-        public object OAuthTokenAdapter { get; private set; }
+        #region Properties - Loopback
+        /// <summary>
+        /// The background worker that runs the listener on the loopback IP address.
+        /// </summary>
+        private BackgroundWorker backgroundWorker;
+
+        /// <summary>
+        /// The ID of the account pending authorization.
+        /// </summary>
+        private string accountIdAuthorizing { get; set; }
+        #endregion
 
         #region Delegate Functions
         private Func<ApiCredential, string> GetOAuthQueryString;
@@ -94,6 +110,17 @@ namespace CleanArchitecture.Core.Infrastructure
             // Create the args and call the listening event handlers, if there are any.
             ApiAuthorizedEventArgs args = new ApiAuthorizedEventArgs(apiName, accountId, success);
             this.Authorized?.Invoke(this, args);
+        }
+
+        internal delegate void OAuthResponseHandler(object sender, string e);
+        /// <summary>
+        /// Raised when an OAuth response has been received.
+        /// </summary>
+        internal event OAuthResponseHandler OAuthResponseReceived;
+        private void RaiseOAuthResponseReceived(string response)
+        {
+            // Create the args and call the listening event handlers, if there are any.
+            this.OAuthResponseReceived?.Invoke(this, response);
         }
         #endregion
 
@@ -132,7 +159,49 @@ namespace CleanArchitecture.Core.Infrastructure
 
             // Initialize the token data collection.
             this.tokenDataCollection = new Dictionary<string, OAuthToken>();
+
+            // Initialize Background worker.
+            this.backgroundWorker = new BackgroundWorker();
+            this.backgroundWorker.WorkerReportsProgress = false;
+            this.backgroundWorker.DoWork += BackgroundWorker_DoWork;
+            this.backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
         }
+
+        #region Event Handlers
+        /// <summary>
+        /// Handles when the background worker listening for the redirect URI has completed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            // Raise the response received event.
+            this.RaiseOAuthResponseReceived(e.Result.ToString());
+
+            // Parse the token from the query string, and continue the OAuth flow by exchanging the code for a token.
+            if (e.Result is string resultString)
+            {
+                string parsedUrl = resultString.Split('?')[1];
+                NameValueCollection parsedQueryString = HttpUtility.ParseQueryString(parsedUrl);
+                if (!string.IsNullOrWhiteSpace(parsedQueryString["code"]))
+                {
+                    // Exchange the code for a token.
+                    this.GetOauthTokenAsync(this.accountIdAuthorizing, parsedQueryString["code"]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles when the background worker is called to start.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            e.Result = this.ListenForOauthResponse();
+        }
+        #endregion
 
         #region Methods
         /// <summary>
@@ -212,6 +281,29 @@ namespace CleanArchitecture.Core.Infrastructure
             string oauthUri = this.OAuthEndPoint + this.GetOAuthQueryString(this.apiCredentials);
 
             return new Uri(oauthUri);
+        }
+
+        /// <summary>
+        /// Starts the OAuthListener for the given account ID. Note that only a single OAuthListener can run at a time. Calling this method when an existing listener is running will cancel the existing listener and replace it with a new listener.
+        /// </summary>
+        /// <param name="accountId">The account ID to associate with the listener.</param>
+        public void StartOAuthListener(string accountId)
+        {
+            // Cancel the existing background worker, if one is running.
+            if (this.backgroundWorker.IsBusy == true) { this.backgroundWorker.CancelAsync(); }
+
+            // Start the background worker and store the accountId.
+            this.accountIdAuthorizing = accountId;
+            this.backgroundWorker.RunWorkerAsync();
+        }
+
+        /// <summary>
+        /// Cancels the OAuthListener, if one is running.
+        /// </summary>
+        public void CancelOAuthListener()
+        {
+            // Cancel the background worker.
+            this.backgroundWorker.CancelAsync();
         }
 
         /// <summary>
@@ -303,6 +395,34 @@ namespace CleanArchitecture.Core.Infrastructure
                 new System.Net.Http.Headers.AuthenticationHeaderValue(this.tokenDataCollection[accountId].TokenType, this.tokenDataCollection[accountId].AccessToken);
 
             return await base.GetAsync(uri);
+        }
+        #endregion
+
+        #region Helper Methods - OAuth Flow
+        private string ListenForOauthResponse()
+        {
+            using (HttpListener httpListener = new HttpListener())
+            {
+                httpListener.Prefixes.Add(this.OAuthRedirectUri + "/");
+                httpListener.Start();
+
+                // Blocking call - this is why this method is run in a background worker.
+                HttpListenerContext context = httpListener.GetContext();
+                HttpListenerRequest request = context.Request;
+
+                HttpListenerResponse response = context.Response;
+
+                System.Diagnostics.Debug.WriteLine("Response url received: " + request.Url);
+
+                //response.Redirect("");
+                response.Close();
+
+                // Pause to ensure the response has been sent.
+                Thread.Sleep(1000);
+                httpListener.Stop();
+
+                return request.Url.ToString();
+            }
         }
         #endregion
 
